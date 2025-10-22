@@ -1,0 +1,83 @@
+---
+const color = '#4C7B58';
+---
+<div id="transition-wrapper">
+  <div id="transition-square"></div>
+</div>
+<style>
+  #transition-wrapper {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    z-index: 9999;
+    pointer-events: none;
+  }
+  #transition-square {
+    width: 100vw;
+    height: 100vh;
+    background: #4C7B58;
+    transition: height 1.1s cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  
+</style>
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const wrapper = document.getElementById('transition-wrapper');
+    const square = document.getElementById('transition-square');
+    if (!wrapper || !square) return;
+    
+    // --- PAGE ENTER ---
+    wrapper.style.display = 'flex';
+    wrapper.style.alignItems = 'flex-end';
+    square.style.height = '100vh';
+    
+    // Hold briefly, then slide down
+    setTimeout(() => {
+      square.style.height = '0vh';
+    }, 400);
+    
+    square.addEventListener('transitionend', (e) => {
+      if (e.propertyName === 'height' && (square.style.height === '0vh' || square.style.height === '0')) {
+        wrapper.style.display = 'none';
+        // Dispatch custom event when transition is complete
+        window.dispatchEvent(new CustomEvent('transition-complete'));
+      }
+    });
+    
+    // --- PAGE EXIT ---
+    document.querySelectorAll('a[href]').forEach(link => {
+      link.addEventListener('click', e => {
+        const url = new URL(link.href, window.location.origin);
+        if (url.origin !== window.location.origin) return;
+        if (link.target === '_blank' || e.metaKey || e.ctrlKey) return;
+        
+        e.preventDefault();
+        wrapper.style.display = 'flex';
+        wrapper.style.alignItems = 'flex-end';
+        square.style.height = '0vh';
+        void square.offsetHeight;
+        
+        requestAnimationFrame(() => {
+          square.style.height = '100vh';
+        });
+        
+        setTimeout(() => {
+          window.location.href = link.href;
+        }, 1000);
+      });
+    });
+  });
+  
+  // Handle image scale animation after transition completes
+  window.addEventListener('transition-complete', () => {
+    // Look for header images in common selectors
+    const headerImage = document.querySelector('.headerSection .headerImage, section .headerImage');
+    if (headerImage) {
+      setTimeout(() => {
+        headerImage.classList.add('animate-in');
+      }, 50);
+    }
+  });
+</script>

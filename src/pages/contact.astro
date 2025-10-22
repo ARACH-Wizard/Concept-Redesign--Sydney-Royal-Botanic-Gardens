@@ -1,0 +1,266 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/nav.astro';
+import Cta from '../components/cta.astro';
+import PageTransition from '../components/transition.astro';
+
+import { Image } from 'astro:assets';
+import contactHeader from '../../src/assets/contactHeader.webp';
+---
+<!-- Below is your "component template." It's just HTML, but with
+some magic sprinkled in to help you build great templates. -->
+<html>
+          <Base title="Contact — Sydney Botanic Gardens" description="Explore the lush gardens, open daily from 7AM to sunset."/> 
+
+<body>
+    <PageTransition />
+    <Nav />
+
+    <section>
+<div class="titleContainer">
+  <div class="slide-wrapper">
+    <h1 class="slide-up">CONTACT</h1>
+</div>
+</div>
+        <div class="grid container">
+            <div class="holder">
+                <div>
+                <h2>PHONE</h2>
+                <p>Give us a call for any quick queries you might have before coming.</p>
+                
+                <button>
+                    <span>CALL</span>
+                </button>
+                </div>
+            </div>
+            <div class="holder">
+                <div>
+                <h2>EMAIL</h2>
+                <p>Shoot us an email if you have specific questions.</p>
+                
+                <button>
+                    <span>EMAIL</span>
+                </button>
+                </div>
+            </div>
+            <div class="holder" style="border-right:none;">
+                <div>
+                <h2>SOCIALS</h2>
+                <p>Reach out to us on social media to stay updated on any events.</p>
+                
+                <button>
+                    <span>INSTAGRAM</span>
+                </button>
+                <button id="Facebook" style="margin-top:2rem;">
+                    <span>FACEBOOK</span>
+                </button>
+                </div>
+            </div>
+        </div>
+        <Image src={contactHeader} class="headerImage" alt="A single flower in a dense rainforest." />
+        
+    </section>
+    
+    
+</body>
+</html>
+<style>
+    .titleContainer{
+        position: absolute;
+        top: 1vw;
+        left: 1vw;
+        z-index: 4;
+    }
+
+    .titleContainer h1{
+        font-family: "Playfair Display", serif;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 100px;
+        line-height: 0.73;
+        color: #FFFFFF;
+        margin: 0;
+    }
+
+    button{
+        margin: 0 auto;
+        background: #FFFFFF;
+        border-radius: 50px;
+        padding: 9px 28px;
+        border:none;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+    
+    button:hover {
+        background: #f0f0f0;
+    }
+    
+    button span{
+        font-family: 'Inter', sans-serif;
+        font-style: normal;
+        font-weight: 900;
+        font-size: 30px;
+        color: #000000;
+    }
+    
+    section{
+        position: relative;
+        max-width:100vw;
+        max-height:100svh;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    body{
+        margin: 0;
+    }
+    
+    h2 {
+        font-family: "Inter", sans-serif;
+        font-style: normal;
+        font-weight: 700;
+        font-size: 48px;
+        line-height: 58px;
+        text-align: center;
+        color: #FFFFFF;
+        margin-bottom:2rem;
+        margin-top: 0;
+    }
+    
+    p{
+        font-family: "Inter", sans-serif;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 30px;
+        line-height: 36px;
+        text-align: center;
+        color: #FFFFFF;
+        margin: 0;
+        margin-bottom:2rem;
+    }
+    
+    .holder>div{
+        position: relative;
+        top: 30vh;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .headerImage {
+        max-width: 100vw;
+        max-height: 100svh;
+        width: 100vw;
+        height: 100vh;
+        position: absolute;
+        inset: 0;
+        object-fit: cover;
+        z-index: 0;
+        filter: blur(5px);
+        transform: scale(1.4);
+  transition: transform 2.0s cubic-bezier(0.65, 0, 0.35, 1), 
+                filter 1.5s cubic-bezier(0.65, 0, 0.35, 1);
+                  transform-origin: 100% 20%;
+    } 
+    
+    .headerImage.animate-in {
+        transform: scale(1);
+        filter: blur(9px);
+    }
+    
+    .grid{
+        display:grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .holder{
+        background: rgba(40, 40, 40, 0.2);
+        border-right: 2px solid rgba(217, 217, 217, 0.5);
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        padding-left:5vw;
+        padding-right: 5vw;
+    }
+        .slide-wrapper {
+  overflow: hidden;
+}
+
+.slide-up {
+  display: inline-block;
+  transform: translateY(100%);
+  opacity: 0;
+}
+
+.slide-up.animate {
+  animation: slide-up 1.85s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+@keyframes slide-up {
+  0% { transform: translateY(100%); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+  @media (max-width: 768px) {
+        .grid{
+            display: flex;
+            flex-direction: column;
+            gap: 5vh;
+            justify-content: center;
+        }
+        .titleContainer h1{
+            font-size:60px;
+        }
+        
+        .titleContainer{
+            top:3vw;
+            left:3vw;
+        }
+        h2 {
+            font-size: 32px;
+            line-height: 38px;
+            margin-bottom: 0.5rem;
+        }
+        
+        p{
+            font-size: 20px;
+            line-height: 24px;
+        }
+        
+        .holder>div{
+            top: 0;
+        }
+        .holder{
+            background:none;
+        }
+        #Facebook{
+            margin-top:.5rem !important;    
+        }
+    }
+</style>
+
+<script>
+window.addEventListener('load', () => {
+  const headerImage = document.querySelector('.headerImage');
+  const heading = document.querySelector('.titleContainer .slide-up');
+
+  if (headerImage) {
+    // Animate image scale
+    headerImage.classList.add('animate-in');
+
+    // Wait for image animation to finish (match CSS transition duration)
+    setTimeout(() => {
+      if (heading) {
+        heading.classList.add('animate');
+      }
+    }, 2000); // 2s matches your headerImage transform duration
+  }
+});
+</script>

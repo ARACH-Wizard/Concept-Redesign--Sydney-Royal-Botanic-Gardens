@@ -1,0 +1,212 @@
+---
+const name = 'Astro';
+
+import { Image } from 'astro:assets';
+import navHeader from '../../src/assets/navHeader.webp';
+---
+<div style="position:fixed;z-index:99;top:0; right:0;">
+    <button id="menuToggle">
+        <span>MENU</span>
+    </button>
+</div>
+    
+<div class="menuContainer" id="menuContainer">
+    
+   <a href="/" aria-label="Link to Home page" class="menuButton">
+        <div class="rotate">
+            <h2 aria-label="Home">HOME</h2>
+        </div>
+    </a>
+   <a href="/visit" aria-label="Link to Visit page" class="menuButton">
+        <div class="rotate">
+            <h2 aria-label="Visit">VISIT</h2>
+        </div>
+    </a>
+    <a href="/learn" aria-label="Link to Learn page" class="menuButton">
+        <div class="rotate">
+            <h2 aria-label="Learn">LEARN</h2>
+        </div>
+    </a>
+    <a href="/contact" aria-label="Link to contact page" class="menuButton">
+        <div class="rotate">
+            <h2 aria-label="Contact">CONTACT</h2>
+        </div>
+    </a>
+</div>
+<Image src={navHeader} class="headerImage" id="headerImage" loading="lazy" alt="A single flower in a dense rainforest." />
+    
+<style>
+   
+    .headerImage {
+        max-width: 100vw;
+        max-height: 100svh;
+        width: 100vw;
+        height: 100vh;
+        position: fixed;
+        inset: 0;
+        object-fit: cover;
+        z-index: 0;
+        opacity: 0;
+        pointer-events: none;
+          transition: opacity 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+    }
+    
+    .headerImage.active {
+        opacity: 1;
+        pointer-events: all;
+        z-index: 5;
+    }
+   
+   
+   
+    .menuButton{
+        width:100%;
+        border-left: 1px solid #808080;
+        border-right: 1px solid #808080;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        cursor: pointer;
+        position: relative;
+        opacity: 0;
+        transform: translateY(20px);
+        transition:     opacity 0.55s cubic-bezier(0.65, 0, 0.35, 1),
+    transform 0.55s cubic-bezier(0.65, 0, 0.35, 1);
+        text-decoration: none;
+    }
+    
+    .menuButton.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    .menuButton::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 0;
+        background: #4C7B5899;
+        transition: height 0.45s cubic-bezier(0.65, 0, 0.35, 1);
+        z-index: 0;
+    }
+   
+    .menuButton:hover::before {
+        height: 100%;
+    }
+   
+   
+   
+    .rotate {
+        transform: rotate(-90deg);
+    }
+   
+    .menuButton h2 {
+        margin: 0;
+        font-family: "Inter", sans-serif;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 7rem;
+        line-height: 1;
+        color: #fff;
+        margin-left: 26vh;
+        position: relative;
+        z-index: 1;
+        transition: all 0.4s ease;
+        background-clip: text;
+        -webkit-background-clip: text;
+    }
+   
+   
+    .menuContainer{
+        width:100vw;
+        height:100vh;
+        max-width:100vw;
+        max-height: 100vh;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        z-index: 98;
+        position: fixed;
+        top: 0;
+        left: 0;
+        visibility: hidden;
+        pointer-events: none;
+    }
+    
+    .menuContainer.active {
+        visibility: visible;
+        pointer-events: all;
+    }
+   
+    button{
+        margin-top:1vw;
+        margin-right:1vw;
+        background: #FFFFFF;
+        border-radius: 50px;
+        padding: 9px 28px;
+        border:none;
+        right: 0;
+        top: 0;
+        position: absolute;
+        z-index: 3;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+    
+    button:hover {
+        background: #f0f0f0;
+    }
+    
+    button span{
+        font-family: 'Inter', sans-serif;
+        font-style: normal;
+        font-weight: 900;
+        font-size: 30px;
+        color: #000000;
+    }
+   
+</style>
+
+<script>
+    const menuToggle = document.getElementById('menuToggle');
+    const menuContainer = document.getElementById('menuContainer');
+    const headerImage = document.getElementById('headerImage');
+    const menuButtons = document.querySelectorAll('.menuButton');
+    let isOpen = false;
+
+    menuToggle?.addEventListener('click', () => {
+        if (!isOpen) {
+            // Open menu
+            menuContainer?.classList.add('active');
+            
+            headerImage?.classList.add('active');
+            
+            menuButtons.forEach((button, index) => {
+                setTimeout(() => {
+                    button.classList.add('visible');
+                }, 300 + (index * 100));
+            });
+            
+            if (menuToggle) {
+                menuToggle.querySelector('span')!.textContent = 'CLOSE';
+            }
+            isOpen = true;
+        } else {
+            // Close menu
+            menuButtons.forEach((button) => {
+                button.classList.remove('visible');
+            });
+            
+            setTimeout(() => {
+                headerImage?.classList.remove('active');
+                menuContainer?.classList.remove('active');
+            }, 500);
+            
+            if (menuToggle) {
+                menuToggle.querySelector('span')!.textContent = 'MENU';
+            }
+            isOpen = false;
+        }
+    });
+</script>

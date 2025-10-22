@@ -1,0 +1,223 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/nav.astro';
+import PageTransition from '../components/transition.astro';
+import { Image } from 'astro:assets';
+import homeHeader from '../../src/assets/SBGHomeHeader.webp';
+---
+<html>
+  <Base title="Home — Sydney Botanic Gardens" description="Explore the lush gardens, open daily from 7AM to sunset."/> 
+<body>
+  <PageTransition />
+
+
+  <Nav />
+  <style>
+   
+    :root {
+      --color-primary: #4C7B58;
+      --color-secondary: #A5C9A1;
+      --color-light: #F7F6F2;
+      --color-text: #2C2C2C;
+      --color-accent: #6B5F49;
+      --color-highlight: #6BAA9E;
+     
+      --font-heading: 'Playfair Display', serif;
+      --font-body: 'Inter', sans-serif;
+      --font-accent: 'DM Sans', sans-serif;
+     
+      --text-xs: 0.75rem;
+      --text-sm: 0.875rem;
+      --text-base: 1rem;
+      --text-lg: 1.25rem;
+      --text-xl: 1.75rem;
+      --text-2xl: 2.25rem;
+      --text-hero: clamp(2.5rem, 6vw, 4.5rem);
+     
+      --transition-base: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+      --transition-fast: all 0.2s ease-out;
+      --transition-slow: all 0.8s ease-in-out;
+    }
+   
+    h1, h2, h3 {
+      font-family: var(--font-heading);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+    p, a, li {
+      font-family: var(--font-body);
+      font-weight: 400;
+      line-height: 1.6;
+    }
+   
+  </style>
+  <section class="headerSection">
+    <div class="headerContainer">
+<div class="titleContainer">
+  <div class="slide-wrapper"><h1 class="slide-up">SYDNEY</h1></div>
+  <div class="slide-wrapper"><h1 class="slide-up">BOTANIC</h1></div>
+  <div class="slide-wrapper"><h1 class="slide-up">GARDENS</h1></div>
+</div>
+
+      <div class="timeContainer">
+        <h3>OPEN DAILY FROM<br>
+        7AM TO SUNSET</h3>
+      </div>
+    </div>
+    <Image src={homeHeader} class="headerImage" alt="A single flower in a dense rainforest." />
+      <div class="overlay"></div>
+  </section>
+</body>
+</html>
+<style>
+  .overlay{
+      position: absolute;
+  inset: 0;
+  pointer-events: none;
+ 
+  mask-image: linear-gradient(to top right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
+  -webkit-mask-image: linear-gradient(to top right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  }
+h1{
+font-family: 'Playfair Display';
+font-style: normal;
+font-weight: 900;
+font-size: clamp(2.5rem, 10vw + 1rem, 12.5rem);
+line-height: 0.75;
+color: #FFFFFF;
+margin: 0;
+  }    
+  h3{
+font-family: 'Playfair Display';
+font-style: normal;
+font-weight: 600;
+font-size: clamp(1.5rem, 3.75vw + 0.5rem, 3rem);
+line-height: 0.95;
+text-align: right;
+color: #FFFFFF;
+  margin:0;
+}
+ 
+
+  body{
+    margin: 0;
+  }
+ 
+  .headerSection {
+    position: relative;
+    max-width:100vw;
+    max-height:100svh;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .headerContainer{
+    position:relative;
+    width:100%;
+    height:100%;
+    z-index:1;
+    display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 1vw;
+  }
+  .timeContainer{
+    display: flex;
+  flex-direction: column;
+  align-items: end;
+  margin-bottom:1vw;
+  }
+  .titleContainer{
+    margin-top:1vw;
+    }
+  .headerImage{
+    max-width:100vw;
+    max-height:100svh;
+    width: 100vw;
+    height: 100vh;
+    position:absolute;
+    inset: 0;
+    object-fit: cover;
+    transition: transform 1.4s cubic-bezier(0.65, 0, 0.35, 1);
+      transform: scale(1.4);
+  transform-origin: 50% 20%;
+  }
+  
+  .headerImage.animate-in {
+    transform: scale(1);
+  }
+  .slide-wrapper {
+  overflow: hidden;
+}
+
+.slide-up {
+  display: inline-block;
+  transform: translateY(100%);
+  opacity: 0;
+}
+
+.slide-up.animate {
+  animation: slide-up 1.85s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+.timeContainer h3 {
+  display: inline-block;
+  transform: translateY(100%);
+  opacity: 0;
+}
+
+.timeContainer h3.animate {
+  animation: slide-up 0.85s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+
+@keyframes slide-up {
+  0% { transform: translateY(100%); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@media (max-width: 768px) {
+  .headerImage{
+
+  transform-origin: 0% 30%;
+  }
+</style>
+
+  <script>
+window.addEventListener('transition-complete', () => {
+  const headerImage = document.querySelector('.headerSection .headerImage');
+  if (headerImage) {
+    // Trigger image scale
+    headerImage.classList.add('animate-in');
+
+    headerImage.addEventListener('transitionend', function handler(e) {
+      if (e.propertyName === 'transform') {
+        headerImage.removeEventListener('transitionend', handler);
+
+        // Animate h1s with stagger
+        const headings = document.querySelectorAll('.titleContainer .slide-up');
+        const animationDuration = 850; // duration in ms, matches CSS
+        const stagger = 100; // 100ms between each h1
+        headings.forEach((h, i) => {
+          setTimeout(() => {
+            h.classList.add('animate');
+          }, i * stagger);
+        });
+
+        // Animate h3 after last h1 finishes
+        const h3 = document.querySelector('.timeContainer h3');
+        const totalH1Time = (headings.length - 1) * stagger + animationDuration;
+        setTimeout(() => {
+          h3.classList.add('animate');
+        }, totalH1Time);
+      }
+    });
+  }
+});
+
+</script>

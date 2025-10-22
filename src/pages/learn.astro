@@ -1,0 +1,272 @@
+---
+console.log('This runs in your terminal, not the browser!');
+import Nav from '../components/nav.astro';
+import Cta from '../components/cta.astro';
+import PageTransition from '../components/transition.astro';
+import Base from '../layouts/Base.astro';
+
+
+import { Image } from 'astro:assets';
+import contactHeader from '../../src/assets/contactHeader.webp';
+import FaunaImage from '../../src/assets/FaunaImage.webp';
+import FloraImage from '../../src/assets/FloraImage.webp';
+import ConservationImage from '../../src/assets/Conservation.webp';
+
+
+---
+<!-- On hover make background scale and have text change from 0.9 white opacity to 1.0 white opacity -->
+<html>
+      <Base title="Learn — Sydney Botanic Gardens" description="Explore the lush gardens, open daily from 7AM to sunset."/> 
+
+<body>
+    <PageTransition />
+    <Nav />
+
+    <section>
+<div class="titleContainer">
+  <div class="slide-wrapper">
+    <h1 class="slide-up">LEARN</h1>
+</div>
+</div>
+        <div class="grid container">
+            <div class="holder" style={`--bg: url(${FloraImage.src})`}>
+                <div>
+                    <h2>FLORA</h2>
+                    <p>Advancing fundamental knowledge of flora with effective conservation solutions to ensure the survival of plants, and all life that depends on them.</p>
+
+                </div>
+            </div>
+                <div class="holder" style={`--bg: url(${FaunaImage.src})`}>
+                <div>
+                    <h2>FAUNA</h2>
+                    <p>Habitat restoration and ecosystem management supports the conservation of native wildlife that depends on healthy plant communities.</p>
+
+                </div>
+            </div>
+            <div class="holder" style={`border-right:none; --bg: url(${ConservationImage.src})`}>
+                <div>
+                    <h2>CONSERVATION</h2>
+                    <p>The Botanic Gardens of Sydney uses science and research to protect plants, focusing on plant protection, identification, adaptation, and restoration.</p>
+ 
+                </div>
+            </div>
+        </div>
+        
+    </section>
+    
+    
+</body>
+</html>
+<style>
+    .titleContainer{
+        position: absolute;
+        top: 1vw;
+        left: 1vw;
+        z-index: 4;
+    }
+    
+    .titleContainer h1{
+        font-family: "Playfair Display", serif;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 100px;
+        line-height: 0.73;
+        color: #FFFFFF;
+        
+        margin: 0;
+    }
+    
+    
+    button{
+        margin: 0 auto;
+        background: #FFFFFF;
+        border-radius: 50px;
+        padding: 9px 28px;
+        border:none;
+        right: 0;
+        top: 0;
+        z-index: 3;
+    }
+    button span{
+        font-family: 'Inter', sans-serif;
+        font-style: normal;
+        font-weight: 900;
+        font-size: 30px;
+        color: #000000;
+    }
+    section{
+        position: relative;
+        max-width:100vw;
+        max-height:100svh;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+    }
+    body{
+        margin: 0;
+    }
+    h2 {
+        font-family: "Inter", sans-serif;
+        font-style: normal;
+        font-weight: 700;
+        font-size: 48px;
+        line-height: 58px;
+        text-align: center;
+        color: #FFFFFF;
+        margin-bottom:2rem;
+        margin-top: 0;
+    }
+
+    p{
+        font-family: "Inter", sans-serif;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 30px;
+        line-height: 36px;
+        text-align: center;
+        color: #FFFFFF;
+        margin: 0;
+        margin-bottom:2rem;
+    }
+    .holder>div{
+        position: relative;
+        top: 25vh;
+        display: flex;
+        flex-direction: column;
+    z-index: 1;
+    }
+    
+ 
+    .grid{
+        display:grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .holder{
+        background: rgba(40, 40, 40, 0.2);
+        border-right: 2px solid rgba(217, 217, 217, .9);
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+       padding-left:5vw;
+        padding-right: 5vw;
+          background-position: top;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+    }
+.holder::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--bg);  /* <-- reference the variable */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: -1;  /* behind content */
+  transition: transform 0.5s ease, filter 0.5s ease;
+}
+
+ .holder:hover::before {
+  transform: scale(1.1); /* zoom effect */
+  filter: blur(10px);    /* blur effect */
+}
+    h1 {
+        color: orange;
+    }
+      
+    
+    .slide-wrapper {
+  overflow: hidden;
+}
+
+.slide-up {
+  display: inline-block;
+  transform: translateY(100%);
+  opacity: 0;
+}
+
+.slide-up.animate {
+  animation: slide-up 1.85s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+@keyframes slide-up {
+  0% { transform: translateY(100%); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+  @media (max-width: 768px) {
+        .grid{
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            justify-content: center;
+        }
+    
+        .holder {
+            flex: 1 1 0;
+            min-height: 0;
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-end;
+            padding: 0 5vw;
+            background: none;
+            border-right: none;
+        }
+        .holder > div {
+            width: 100%;
+            position: relative;
+            top: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+        }
+        .titleContainer h1{
+            font-size:60px;
+        }
+        
+        .titleContainer{
+            top:3vw;
+            left:3vw;
+        }
+        h2 {
+            font-size: 32px;
+            line-height: 38px;
+        }
+        
+        p{
+            font-size: 20px;
+            line-height: 24px;
+        }
+        
+    }
+</style>
+
+<script>
+window.addEventListener('load', () => {
+  const headerImage = document.querySelector('.headerImage');
+  const heading = document.querySelector('.titleContainer .slide-up');
+
+  if (headerImage) {
+    // Animate image scale
+    headerImage.classList.add('animate-in');
+
+    // Wait for image animation to finish (match CSS transition duration)
+    setTimeout(() => {
+      if (heading) {
+        heading.classList.add('animate');
+      }
+    }, 2000); // 2s matches your headerImage transform duration
+  }
+});
+</script>
